@@ -1,5 +1,5 @@
-from asyncio.windows_events import NULL
 from Lista import * 
+from archivosJSON import *
 
 class ListaClientes(Lista):
     def __init__(self):
@@ -7,6 +7,8 @@ class ListaClientes(Lista):
 
     def agregarCliente(self, Cliente):
         self.agregarElemento(Cliente)
+        ajs = archivosJSON()
+        ajs.añadirCliente(Cliente)
 
     def eliminarCliente(self, clienteNombre):
         p = self.buscarCliente(clienteNombre)

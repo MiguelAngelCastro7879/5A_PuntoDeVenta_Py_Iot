@@ -45,11 +45,14 @@ class Acciones:
                 float(input('Escribe las unidades del nuevo producto:\n'))))   
     
     def lProductos(self):
+        p = ''
         if productos.leerProductos() == True:
             return print('Lista Vacia')
         for prod in productos.leerProductos():
             print(str(prod.Id) + "||" + prod.nombre + "||" + str(prod.precio)+ "||" + str(prod.cantidad))
-    
+            p = {"Id":prod.Id, "nombre":prod.nombre,"precio":prod.precio,"cantidad":prod.cantidad}
+        
+
     def eProducto(self):
         if productos.leerProductos() == True:
             return print('Lista Vacia')
@@ -153,6 +156,8 @@ class Acciones:
                     print('Total: ' + str(client.compra.total))
                     print('Efectivo: ' + str(client.compra.efectivo))
                     print('Cambio: ' + str(client.compra.cambio))
+                    opc = 0
+                else:
                     opc = 0
                 input()
 

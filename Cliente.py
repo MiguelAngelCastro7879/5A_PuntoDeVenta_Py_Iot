@@ -4,11 +4,11 @@ from Venta import *
 class Cliente:
     nombre=""
     Id = 0
-    compra = NULL
+    compra = None
     def __init__(self, nombre):
         self.nombre = nombre
         self.Id = id(self)
-        self.compra = NULL
+        self.compra = None
     
     def realizarCompra(self, productos):
         self.compra = Venta(productos,self)

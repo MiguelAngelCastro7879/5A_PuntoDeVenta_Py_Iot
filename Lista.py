@@ -3,7 +3,6 @@ class Lista:
 
     def __init__(self):
         self.ListaElementos = []
-        print('que onda')
         
         # CREATE
     def agregarElemento(self, elm):
@@ -31,7 +30,7 @@ class Lista:
         #Si es false significa que no se encontró el elemento
         if borrado != True and borrado != False:
             self.ListaElementos.remove(borrado)
-        return borrado;
+        return borrado
 
     def buscarElemento(self, elm):
         if len(self.ListaElementos) == 0:

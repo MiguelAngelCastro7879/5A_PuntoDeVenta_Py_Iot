@@ -1,14 +1,11 @@
-
-from asyncio.windows_events import NULL
-from functools import total_ordering
 from re import I
 from ListaClientes import *
 from ListaProductos import *
 from Producto import *
 class Venta:
-    ProductosGenerales = NULL
+    ProductosGenerales = None
     ListaProductos = ListaProductos()
-    Cliente = NULL  
+    Cliente = None
     estado = 'No realizada'
     total = 0
     efectivo = 0
@@ -41,7 +38,7 @@ class Venta:
             
             self.ListaProductos.agregarProducto(pnuevo)
             return pnuevo
-        return x;
+        return x
 
     def eliminarCesta(self, nombreProducto, cantidadProducto):
         pg = self.ProductosGenerales.buscarProducto(nombreProducto)
@@ -66,7 +63,7 @@ class Venta:
         for x in self.ListaProductos.leerProductos():
             self.total = float(self.total) + (float(x.precio) * float(x.cantidad))
             
-        return self.total;
+        return self.total
     def finalizar(self, efectivo):
         self.calcularTotal()
         self.efectivo = efectivo

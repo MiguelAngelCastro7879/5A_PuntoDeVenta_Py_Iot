@@ -1,11 +1,12 @@
-from asyncio.windows_events import NULL
 from Lista import * 
-
+from archivosJSON import *
 class ListaVentas(Lista):
     def __init__(self):
         super().__init__()
     def agregarVenta(self, Venta):
         self.agregarElemento(Venta)
+        ajs = archivosJSON()
+        ajs.añadirVenta(Venta)
         
     def leerVentas(self):
         return self.leerElementos()
