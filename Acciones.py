@@ -6,7 +6,7 @@ clientes = InterfaceCliente()
 productos = InterfaceProducto()
 ventas = InterfaceVentas()
 
-from ListaVentas import *
+
 class Acciones:
     def __init__(self, menu1, menu2):
         if menu2 == '0':

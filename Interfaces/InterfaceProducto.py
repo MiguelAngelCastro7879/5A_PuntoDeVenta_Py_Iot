@@ -2,6 +2,8 @@
 from Modelos.Lista import *
 from Modelos.Producto import *
 from Interfaces.Interface import *
+from archivosJSON import archivosJSON
+json = archivosJSON()
 
 
 class InterfaceProducto(Interface):
@@ -14,15 +16,13 @@ class InterfaceProducto(Interface):
                 input('Escribe el nombre del nuevo producto:\n'),
                 input('Escribe el precio del nuevo producto:\n'),
                 float(input('Escribe las unidades del nuevo producto:\n'))))   
+        json.escribirProductos(self.listaProductos)
     
     def leer(self):
-        p = ''
         if self.listaProductos.leerElementos() == True:
             return print('Lista Vacia')
         for prod in self.listaProductos.leerElementos():
             print(str(prod.Id) + "||" + prod.nombre + "||" + str(prod.precio)+ "||" + str(prod.cantidad))
-            p = {"Id":prod.Id, "nombre":prod.nombre,"precio":prod.precio,"cantidad":prod.cantidad}
-        
 
     def eliminar(self):
         if self.listaProductos.leerElementos() == True:
@@ -32,6 +32,7 @@ class InterfaceProducto(Interface):
             print('Elemento no encontrado')
         else:
             print('Producto eliminado')
+        json.escribirProductos(self.listaProductos)
     
     def actualizar(self):
         p = self.listaProductos.buscarElemento(
@@ -45,4 +46,4 @@ class InterfaceProducto(Interface):
             p.cantidad = float(input('Ingresa el nuevo cantidad del producto:\n'))
             print('Producto:')
             print(str(p.Id) + "||" + p.nombre + "||" + str(p.precio)+ "||" + str(p.cantidad))
- 
+        json.escribirProductos(self.listaProductos)

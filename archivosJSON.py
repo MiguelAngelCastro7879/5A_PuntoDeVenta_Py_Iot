@@ -3,50 +3,54 @@ import json
 import os
 
 
+
+pr = "JSON/Productos.json"
+vn = "JSON/Ventas.json"
+cl = "JSON/Clientes.json"
+
 class archivosJSON:
     def __init__(self) -> None:
         pass
-    def añadirProducto(self, prod):
-        if os.path.exists('productos.json'):
-            archivoProductos = open("productos.json", "a")
-            archivoProductos.write(",")
-        else:
-            archivoProductos = open("productos.json", "a")
-        p = {"Id": prod.Id, "nombre": prod.nombre,"precio": prod.precio,"cantidad": prod.cantidad}
-        archivoProductos.write(json.dumps(p, indent=4))
-        archivoProductos.close()
-        pass
-    def añadirCliente(self, clnt):
-        if os.path.exists('clientes.json'):
-            archivoClientes = open("clientes.json", "a")
-            archivoClientes.write(",")
-        else:
-            archivoClientes = open("clientes.json", "a")
-        c = {"Id": clnt.Id, "nombre": clnt.nombre}
-        archivoClientes.write(json.dumps(c, indent=4))
-        archivoClientes.close()
-        pass
-    def añadirVenta(self, vnt):
+    def escribirProductos(self, productos):
+        f = open(pr, "w")
         data = {}
         data['productos'] = []
-        for prod in vnt.ListaProductos.leerProductos():
-            data['productos'].append({"Id": prod.Id, "nombre": prod.nombre,"precio": prod.precio,"cantidad": prod.cantidad})        
-
-        
-        if os.path.exists('registroVentas.json'):
-            archivoClientes = open("registroVentas.json", "a")
-            archivoClientes.write(",")
-        else:
-            archivoVentas = open("registroVentas.json", "a")
-        c = {"Id": vnt.Id, 
-        "Cliente": {
-            "Id": vnt.Cliente.Id, "nombre": vnt.Cliente.nombre
-            }, 
-        "estado": vnt.estado, 
-        "total": vnt.total,
-        "efectivo": vnt.efectivo,
-        "cambio": vnt.cambio,
-        "Lista Productos": data['productos'],}
-        archivoVentas.write(json.dumps(c, indent=4))
-        archivoVentas.close()
+        for prod in productos.leerElementos():
+            data['productos'].append({"Id": prod.Id, "nombre": prod.nombre,"precio": prod.precio,"cantidad": prod.cantidad})  
+        f.write(json.dumps(data, indent=4))
+        f.close()
+        pass
+    def escribirClientes(self, clientes):
+        f = open(cl, "w")
+        data = {}
+        data['clientes'] = []
+        for prod in clientes.leerElementos():
+            data['clientes'].append({"Id": prod.Id, "nombre": prod.nombre})  
+        f.write(json.dumps(data, indent=4))
+        f.close()
+        pass
+    def escribirVentas(self, ventas):
+        f = open(vn, "w")
+        data = {}
+        data['ventas'] = []
+        for venta in ventas.leerElementos():
+            
+            p = {}
+            p['productos'] = []
+            
+            for prod in venta.ListaProductos.leerElementos():
+                p['productos'].append({"Id": prod.Id, "nombre": prod.nombre,"precio": prod.precio,"cantidad": prod.cantidad})  
+            data['ventas'].append(
+                                    {"Id": venta.Id, 
+                                        "Cliente": {
+                                                "Id": venta.Cliente.Id, 
+                                                "nombre": venta.Cliente.nombre
+                                            }, 
+                                        "estado": venta.estado, 
+                                        "total": venta.total,
+                                        "efectivo": venta.efectivo,
+                                        "cambio": venta.cambio,
+                                        "Lista de productos": p['productos'],}) 
+        f.write(json.dumps(data, indent=4))
+        f.close()
         pass

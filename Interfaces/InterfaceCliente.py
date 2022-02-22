@@ -2,8 +2,8 @@
 from Modelos.Lista import *
 from Modelos.Cliente import *
 from Interfaces.Interface import *
-
-
+from archivosJSON import archivosJSON
+json = archivosJSON()
 
 class InterfaceCliente(Interface):
     listaClientes = Lista()
@@ -13,7 +13,8 @@ class InterfaceCliente(Interface):
     def añadir(self):
         self.listaClientes.agregarElemento(
             Cliente(
-                input('Escribe el nombre del nuevo Cliente:\n')))   
+                input('Escribe el nombre del nuevo Cliente:\n'))) 
+        json.escribirClientes(self.listaClientes)
     
     def leer(self):
         if self.listaClientes.leerElementos() == True:
@@ -29,6 +30,7 @@ class InterfaceCliente(Interface):
             print('Elemento no encontrado')
         else:
             print('Cliente eliminado')
+        json.escribirClientes(self.listaClientes)
     
     def actualizar(self):
         c = self.listaClientes.buscarElemento(
@@ -41,4 +43,5 @@ class InterfaceCliente(Interface):
             c.nombre = input('Ingresa el nuevo nombre del Cliente:\n')
             print('Cliente:')
             print(str(c.Id) + "||" + c.nombre)
+        json.escribirClientes(self.listaClientes)
    

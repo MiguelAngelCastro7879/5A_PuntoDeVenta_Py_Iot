@@ -5,6 +5,8 @@ from Interfaces.Interface import *
 from Modelos.Venta import *
 from Modelos.Lista import *
 from Interfaces.InterfaceProducto import *
+from archivosJSON import archivosJSON
+json = archivosJSON()
 
 cliente = InterfaceCliente().listaClientes
 productos = InterfaceProducto().listaProductos
@@ -15,7 +17,8 @@ class InterfaceVentas(Interface):
         client = cliente.buscarElemento(
             input('Ingresa el nombre del cliente:\n'))
         if client== True or client == False:
-            return print('Cliente no encontrado')
+            print('Cliente no encontrado')
+            return None
         else:
             client.realizarCompra(productos)
             opc = 1
@@ -33,7 +36,9 @@ class InterfaceVentas(Interface):
                     c = client.añadirProducto(
                         input('Ingresa el nombre del producto: '), 
                         float(input('Ingresa la cantidad de productos: ')))
-                    if c == True: return print('No hay productos en el almacen')
+                    if c == True: 
+                        print('No hay productos en el almacen')
+                        return None
                     if c == False: print('Elemento no encontrado')
                     else: print(str(c.Id) + "||" + c.nombre + "||" + str(c.precio)+ "||" + str(c.cantidad))
                 
@@ -41,17 +46,23 @@ class InterfaceVentas(Interface):
                     c = client.quitarProducto(
                         input('Ingresa el nombre del producto: '), 
                         float(input('Ingresa la cantidad de productos: ')))
-                    if c == True: return print('Lista Vacia')
+                    if c == True: 
+                        print('Lista Vacia')
+                        return None
                     if c == False: print('Elemento no encontrado')
                     else: print('Elementos Eliminados')
                 elif opc == '3':
                     cl = client.mostrarProductos()
-                    if cl == True: return print('Lista Vacia')
+                    if cl == True: 
+                        print('Lista Vacia')
+                        return None
                     for c in cl:
                         print(str(c.Id) + "||" + c.nombre + "||" + str(c.precio)+ "||" + str(c.cantidad))
                 elif opc == '4':
                     cl = client.mostrarProductos()
-                    if cl == True: return print('Lista Vacia')
+                    if cl == True: 
+                        print('Lista Vacia')
+                        return None
                     print('Cliente: ' + str(client.nombre))
                     print('Folio: ' + str(client.compra.Id))
                     for c in cl:
@@ -60,6 +71,7 @@ class InterfaceVentas(Interface):
                     print('Total: ' + str(client.compra.total))
                     print('Efectivo: ' + str(client.compra.efectivo))
                     print('Cambio: ' + str(client.compra.cambio))
+                    json.escribirVentas(ventas)
                     opc = 0
                 elif opc == '0':
                     opc = 0
@@ -69,13 +81,16 @@ class InterfaceVentas(Interface):
 
     def leer(self):
         if ventas.leerElementos() == True: 
-            return print('No hay registros')
+            print('No hay registros')
+            return None
         for v in ventas.leerElementos():
             print('Folio: ' +str(v.Id))
             print('Cliente: '+ v.Cliente.nombre)
             print('Estado: '+ v.estado)
             cesta = v.leerCesta()
-            if cesta == True: return print('Lista Vacia')
+            if cesta == True:
+                print('Lista Vacia')
+                return None
             for c in cesta:
                 print(str(c.Id) + "||" + c.nombre + "||" + str(c.precio)+ "||" + str(c.cantidad))
             print('Total: ' + str(v.total))
