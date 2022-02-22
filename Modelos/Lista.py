@@ -32,11 +32,20 @@ class Lista:
             self.ListaElementos.remove(borrado)
         return borrado
 
-    def buscarElemento(self, elm):
+    def buscarElemento(self, elmNom):
         if len(self.ListaElementos) == 0:
             return True
         else:
             for elemento in self.ListaElementos:
-                if elemento == elm:
+                if elemento == elmNom or elemento.nombre == elmNom:
+                    return elemento
+            return False
+            
+    def buscarElementoId(self, elmId):
+        if len(self.ListaElementos) == 0:
+            return True
+        else:
+            for elemento in self.ListaElementos:
+                if elemento.Id == elmId :
                     return elemento
             return False

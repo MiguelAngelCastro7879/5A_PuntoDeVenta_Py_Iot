@@ -1,6 +1,4 @@
-from asyncio.windows_events import NULL
-from Venta import *
-
+from Modelos.Venta import *
 class Cliente:
     nombre=""
     Id = 0
@@ -24,5 +22,5 @@ class Cliente:
 
     def finalizarCompra(self, efectivo, ListaVentas):
         self.compra.finalizar(efectivo)
-        ListaVentas.agregarVenta(self.compra)
+        ListaVentas.agregarElemento(self.compra)
         return self.compra.leerCesta()

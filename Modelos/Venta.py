@@ -1,10 +1,8 @@
-from re import I
-from ListaClientes import *
-from ListaProductos import *
-from Producto import *
+from Modelos.Lista import *
+from Modelos.Producto import *
 class Venta:
     ProductosGenerales = None
-    ListaProductos = ListaProductos()
+    ListaProductos = Lista()
     Cliente = None
     estado = 'No realizada'
     total = 0
@@ -13,7 +11,7 @@ class Venta:
     Id = 0
 
     def __init__(self, productos, Cliente):
-        self.ListaProductos = ListaProductos()
+        self.ListaProductos = Lista()
         self.Id = id(self)
         self.ProductosGenerales = productos
         self.Cliente = Cliente
@@ -25,7 +23,7 @@ class Venta:
     def añadirCesta(self, nombreProducto, cantidadProducto):
         if cantidadProducto <= 0:
             return True
-        x = self.ProductosGenerales.buscarProducto(nombreProducto)
+        x = self.ProductosGenerales.buscarElemento(nombreProducto)
         if x != True and x !=False:
             if  x.cantidad >= cantidadProducto:
                 x.cantidad = x.cantidad - cantidadProducto
@@ -36,13 +34,13 @@ class Venta:
             
             pnuevo = Producto(x.nombre, x.precio, cantidadProducto)
             
-            self.ListaProductos.agregarProducto(pnuevo)
+            self.ListaProductos.agregarElemento(pnuevo)
             return pnuevo
         return x
 
     def eliminarCesta(self, nombreProducto, cantidadProducto):
-        pg = self.ProductosGenerales.buscarProducto(nombreProducto)
-        x = self.ListaProductos.buscarProducto(nombreProducto)
+        pg = self.ProductosGenerales.buscarElemento(nombreProducto)
+        x = self.ListaProductos.buscarElemento(nombreProducto)
         if x != True and x !=False:
             if  x.cantidad >= cantidadProducto:
                 x.cantidad = x.cantidad - cantidadProducto
@@ -51,16 +49,16 @@ class Venta:
                 self.ListaProductos.eliminarElemento(x)
         
     def leerCesta(self):
-        return self.ListaProductos.leerProductos()
+        return self.ListaProductos.leerElementos()
     def devolucion(self):
-        for x in self.ListaProductos.leerProductos():
-            for pg in  self.ProductosGenerales.leerProductos():
+        for x in self.ListaProductos.leerElementos():
+            for pg in  self.ProductosGenerales.leerElementos():
                 if pg.nombre == x.nombre:
                     pg.cantidad = pg.cantidad + x.cantidad
                     self.estado = 'Devolucion'
 
     def calcularTotal(self):
-        for x in self.ListaProductos.leerProductos():
+        for x in self.ListaProductos.leerElementos():
             self.total = float(self.total) + (float(x.precio) * float(x.cantidad))
             
         return self.total
