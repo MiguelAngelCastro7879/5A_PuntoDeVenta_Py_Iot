@@ -3,12 +3,13 @@ from Modelos.Lista import *
 from Modelos.Producto import *
 from Interfaces.Interface import *
 from archivosJSON import archivosJSON
+import os
 json = archivosJSON()
-
+pr = "JSON/Productos.json"
 
 class InterfaceProducto(Interface):
     listaProductos = Lista()
-    def __init__(self) -> None:
+    def __init__(self):
         super().__init__()
     def añadir(self):
         self.listaProductos.agregarElemento(
@@ -47,3 +48,14 @@ class InterfaceProducto(Interface):
             print('Producto:')
             print(str(p.Id) + "||" + p.nombre + "||" + str(p.precio)+ "||" + str(p.cantidad))
         json.escribirProductos(self.listaProductos)
+
+    def importarDatos(self):
+        if os.path.exists(pr):
+            json = archivosJSON()
+            datos = json.leerProductos()
+            for producto in datos["productos"]:
+                p = Producto(producto["nombre"],producto["precio"],producto["cantidad"])
+                p.Id = producto["Id"]
+                self.listaProductos.agregarElemento(p)
+        else:
+            pass

@@ -1,15 +1,11 @@
 from genericpath import exists
 import json
-import os
-
-
-
 pr = "JSON/Productos.json"
 vn = "JSON/Ventas.json"
 cl = "JSON/Clientes.json"
 
 class archivosJSON:
-    def __init__(self) -> None:
+    def __init__(self):
         pass
     def escribirProductos(self, productos):
         f = open(pr, "w")
@@ -54,3 +50,9 @@ class archivosJSON:
         f.write(json.dumps(data, indent=4))
         f.close()
         pass
+    
+    def leerProductos(self):
+        f = open(pr, "r")
+        data = json.load(f)
+        f.close()
+        return data

@@ -1,8 +1,15 @@
-from colorama import init, Fore, Back, Style
+from colorama import Style
 import os
 from Acciones import *
+from Interfaces.InterfaceProducto import *
+
+
+
 class Interfaz:
+    productos = InterfaceProducto()
+
     def __init__(self):
+        productos.importarDatos()
         self.menu()
     def menu(self):
         opc = ''
